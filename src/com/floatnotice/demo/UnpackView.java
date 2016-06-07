@@ -86,7 +86,8 @@ public class UnpackView extends LinearLayout{
 	String title=ext.getString(Notification.EXTRA_TITLE);
 	String text=ext.getString(Notification.EXTRA_TEXT);
 	nid=sbn.getId();
-	if(android.os.Build.VERSION.SDK_INT>21){
+	Log.d("sdk", android.os.Build.VERSION.SDK_INT+"");
+	if(android.os.Build.VERSION.SDK_INT>=21){
 	key=sbn.getKey();
 	}
 	
@@ -137,7 +138,7 @@ public class UnpackView extends LinearLayout{
 			MyWindowManager.removeBigWindow(context,id);
 			MyWindowManager.removeSmallWindow(context,id);
 			NoticService ns = MyWindowManager.getNS();
-		if(android.os.Build.VERSION.SDK_INT>21){
+		if(android.os.Build.VERSION.SDK_INT>=21){
 		    ns.cancelNotification(key);
 		}
 		else{
