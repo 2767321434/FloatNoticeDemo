@@ -2,6 +2,7 @@ package com.floatnotice.demo;
 
 import java.lang.reflect.Field;
 
+import android.animation.ObjectAnimator;
 import android.app.Notification;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -127,6 +128,7 @@ public class PackView extends LinearLayout {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
+		
 		case MotionEvent.ACTION_DOWN:
 			// 手指按下时记录必要数据,纵坐标的值都需要减去状态栏高度
 			xInView = event.getX();
@@ -143,10 +145,12 @@ public class PackView extends LinearLayout {
 			updateViewPosition();
 			break;
 		case MotionEvent.ACTION_UP:
+		    
 			// 如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。
 			if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
 				openBigWindow();
 			}
+			fixedPosition();
 			break;
 		default:
 			break;
@@ -168,18 +172,35 @@ public class PackView extends LinearLayout {
 	 * 更新小悬浮窗在屏幕中的位置。
 	 */
 	private void updateViewPosition() {
-	    if(xInScreen-xInView>mScreenWidth/2)
-	    {
-		mParams.x=mScreenWidth-viewWidth;
-	    }else
-	    {
-		mParams.x=0;
-	    }
-		//mParams.x = (int) (xInScreen - xInView);
+	    
+
+		//mParams.x=mScreenWidth-viewWidth;
+
+		mParams.x = (int) (xInScreen - xInView);
 		mParams.y = (int) (yInScreen - yInView);
 		windowManager.updateViewLayout(this, mParams);
 	}
-
+	private void fixedPosition()
+	{
+	    int x;
+	    if(xInScreen-xInView>mScreenWidth/2)
+	    {
+		x=mScreenWidth-viewWidth;
+	    }else
+	    {
+		x=0;
+	    }
+		mParams.x = x;
+		
+		mParams.y = (int) (yInScreen - yInView);
+		ObjectAnimator.ofFloat(this, "parmX", xInScreen,x).setDuration(300).start();
+		
+	}
+	public void setParmX(float x)
+	{
+	    mParams.x =(int) x;
+	    windowManager.updateViewLayout(this, mParams);
+	}
 	/**
 	 * 打开大悬浮窗，同时关闭小悬浮窗。
 	 */
