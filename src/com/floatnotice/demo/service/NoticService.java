@@ -66,7 +66,9 @@ public class NoticService extends NotificationListenerService{
 	sbnList=new ArrayList<StatusBarNotification>();
 	for(StatusBarNotification sn:getActiveNotifications())
 	{
+	    if(sn.isClearable()){
 	    sbnList.add(sn);
+	    }
 	}
 	Bundle ext=new Bundle();
 	
