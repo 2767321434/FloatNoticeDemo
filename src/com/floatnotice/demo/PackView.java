@@ -10,6 +10,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.service.notification.StatusBarNotification;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -80,18 +81,20 @@ public class PackView extends LinearLayout {
 	private float yInView;
 	private Drawable pkg_icon ;
 	private int id;
-
+	private Handler handler=new Handler();
+	private View view;
+	
 	public PackView(Context context,int id) {
 		super(context);
 		this.id=id;
 		windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		LayoutInflater.from(context).inflate(R.layout.pack_layout, this);
-		View view = findViewById(R.id.pack_layout);
+		view = findViewById(R.id.pack_layout);
 		viewWidth = view.getLayoutParams().width;
 		viewHeight = view.getLayoutParams().height;
 		DisplayMetrics dm=context.getResources().getDisplayMetrics();
 		mScreenWidth=dm.widthPixels;
-		
+		view.setAlpha(0.7f);
 		ImageView largeImage=(ImageView) findViewById(R.id.large_icon);
 		ImageView smallImage=(ImageView) findViewById(R.id.small_icon);
 		StatusBarNotification sbn=MyWindowManager.getInfo(id);
@@ -125,11 +128,6 @@ public class PackView extends LinearLayout {
 		    smallImage.setImageDrawable(pkg_icon);
 		}
 		Log.d("large_icon","large_icon图标是null--"+large_icon);
-		
-		    
-		
-		
-
 	}
 	
 
@@ -145,11 +143,13 @@ public class PackView extends LinearLayout {
 			yDownInScreen = event.getRawY() - getStatusBarHeight();
 			xInScreen = event.getRawX();
 			yInScreen = event.getRawY() - getStatusBarHeight();
+			view.setAlpha(1f);
 			break;
 		case MotionEvent.ACTION_MOVE:
 			xInScreen = event.getRawX();
 			yInScreen = event.getRawY() - getStatusBarHeight();
 			// 手指移动的时候更新小悬浮窗的位置
+			view.setAlpha(1f);
 			updateViewPosition();
 			break;
 		case MotionEvent.ACTION_UP:
@@ -176,19 +176,20 @@ public class PackView extends LinearLayout {
 	public void setParams(WindowManager.LayoutParams params) {
 		mParams = params;
 	}
-
+	
 	/**
 	 * 更新小悬浮窗在屏幕中的位置。
 	 */
 	private void updateViewPosition() {
-	    
-
-		//mParams.x=mScreenWidth-viewWidth;
 
 		mParams.x = (int) (xInScreen - xInView);
 		mParams.y = (int) (yInScreen - yInView);
+		
 		windowManager.updateViewLayout(this, mParams);
 	}
+	/**
+	 * 拖动后悬浮窗自动贴边
+	 */
 	private void fixedPosition()
 	{
 	    int x;
@@ -200,11 +201,14 @@ public class PackView extends LinearLayout {
 		x=0;
 	    }
 		mParams.x = x;
-		
 		mParams.y = (int) (yInScreen - yInView);
 		ObjectAnimator.ofFloat(this, "parmX", xInScreen,x).setDuration(300).start();
-		
+		view.setAlpha(0.7f);
 	}
+	/**
+	 * 设置悬浮窗x轴位置
+	 * @param x
+	 */
 	public void setParmX(float x)
 	{
 	    mParams.x =(int) x;

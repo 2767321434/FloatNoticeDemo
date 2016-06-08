@@ -31,9 +31,6 @@ public class UnpackView extends LinearLayout{
 	public static int viewWidth;
 
 	/**
-	 * 记录大悬浮窗的高度
-	 */
-	/**
 	 * 记录当前手指位置在屏幕上的横坐标值
 	 */
 	private float xInScreen;
@@ -62,6 +59,7 @@ public class UnpackView extends LinearLayout{
 	 * 记录手指按下时在小悬浮窗的View上的纵坐标的值
 	 */
 	private float yInView;
+	
 	public static int viewHeight;
 	private int nid;
 	private String key;
@@ -92,9 +90,7 @@ public class UnpackView extends LinearLayout{
 	}
 	
 	pkg_name=sbn.getPackageName();
-	//pi=ext.getParcelable("pi");
 	pi=sbn.getNotification().contentIntent;
-	//tag=ext.getString("this_tag");
 	tag=sbn.getTag();
 	
 	Log.d("pi==",pi+"");
@@ -108,7 +104,7 @@ public class UnpackView extends LinearLayout{
 	text_view.setText(text);
 	Bitmap icon=(Bitmap)ext.getParcelable(Notification.EXTRA_LARGE_ICON);
 	ImageView icon_view=(ImageView) findViewById(R.id.nIcon);
-	//if(icon!=null){
+
 	PackageManager pm=context.getPackageManager();
 	
 	try {
@@ -135,7 +131,7 @@ public class UnpackView extends LinearLayout{
 		@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 		@Override
 		public void onClick(View v) {
-			// 点击关闭悬浮窗的时候，移除所有悬浮窗，并停止Service
+			// 点击关闭悬浮窗的时候，移除所有悬浮窗
 			MyWindowManager.removeBigWindow(context,id);
 			MyWindowManager.removeSmallWindow(context,id);
 			NoticService ns = MyWindowManager.getNS();
@@ -181,14 +177,7 @@ public class UnpackView extends LinearLayout{
 	    Log.d("xInView",xInView+"--x");
 		yInView = event.getY();
 		 Log.d("yInView",yInView+"--y");
-/*		xDownInScreen = event.getRawX();
-		 Log.d("xDownInScreen",xDownInScreen+"--x");
-		yDownInScreen = event.getRawY() - getStatusBarHeight();
-		Log.d("yDownInScreen",yDownInScreen+"--y");
-		xInScreen = event.getRawX();
-		 Log.d("xInScreen",xInScreen+"--x");
-		yInScreen = event.getRawY() - getStatusBarHeight();
-		Log.d("yInScreen",yInScreen+"--y");*/
+
 	    break;
 	case MotionEvent.ACTION_MOVE:
 	    break;
@@ -196,7 +185,7 @@ public class UnpackView extends LinearLayout{
 	    if(xInView<0||yInView<0||xInView>viewWidth||yInView>viewHeight)
 	    {
 		Log.d("unpack_id",id+"---");
-		// 点击返回的时候，移除大悬浮窗，创建小悬浮窗
+		// 点击窗口外的区域返回，移除大悬浮窗，创建小悬浮窗
 		MyWindowManager.removeBigWindow(mContext,id);
 		MyWindowManager.createSmallWindow(mContext,id);
 	    }
