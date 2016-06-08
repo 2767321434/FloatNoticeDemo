@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class PackView extends LinearLayout {
 
@@ -96,6 +97,13 @@ public class PackView extends LinearLayout {
 		StatusBarNotification sbn=MyWindowManager.getInfo(id);
 		Bundle ext=sbn.getNotification().extras;
 		Bitmap large_icon=ext.getParcelable(Notification.EXTRA_LARGE_ICON);
+		int number=sbn.getNotification().number;
+		TextView numberView=(TextView) findViewById(R.id.number);
+		if(number>1){
+		    numberView.setVisibility(VISIBLE);
+		    numberView.setText(number);
+		}
+		
 		
 		String pkg_name=sbn.getPackageName();
 		PackageManager pm=context.getPackageManager();
@@ -149,8 +157,9 @@ public class PackView extends LinearLayout {
 			// 如果手指离开屏幕时，xDownInScreen和xInScreen相等，且yDownInScreen和yInScreen相等，则视为触发了单击事件。
 			if (xDownInScreen == xInScreen && yDownInScreen == yInScreen) {
 				openBigWindow();
-			}
+			}else{
 			fixedPosition();
+			}
 			break;
 		default:
 			break;

@@ -96,11 +96,12 @@ public class UnpackView extends LinearLayout{
 	pi=sbn.getNotification().contentIntent;
 	//tag=ext.getString("this_tag");
 	tag=sbn.getTag();
-	Log.d("pi==",pi.toString());
+	
+	Log.d("pi==",pi+"");
 	Log.d("this_id",nid+"");
 	Log.d("this_tag",key+"");
-	Log.d("title",title);
-	Log.d("text",text);
+	Log.d("title",title+"");
+	Log.d("text",text+"");
 	TextView title_view=(TextView) findViewById(R.id.nTitle);
 	title_view.setText(title);
 	TextView text_view=(TextView) findViewById(R.id.nText);

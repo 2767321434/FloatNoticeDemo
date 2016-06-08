@@ -22,6 +22,7 @@ import android.util.Log;
 
 import com.floatnotice.demo.MyWindowManager;
 
+@SuppressLint("NewApi")
 public class NoticService extends NotificationListenerService{
    
     private PendingIntent pendingIntent;
@@ -72,7 +73,7 @@ public class NoticService extends NotificationListenerService{
 	    }
 	}
 	Bundle ext=new Bundle();
-	
+	ext.putInt("thisRemove", -1);
 	Intent intent = new Intent();
 	    intent.putExtras(ext);
         intent.setAction("notice");
@@ -139,6 +140,24 @@ public class NoticService extends NotificationListenerService{
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
 	// TODO 自动生成的方法存根
+	int num=-1;
+	for(int i=0;i<sbnList.size();i++)
+	{
+	    if((sbnList.get(i).getPackageName()).equals(sbn.getPackageName())&(sbnList.get(i).getId()==sbn.getId()))
+	    {
+		Log.d("i==",i+"");
+		num=i;
+		break;
+	    }
+	}
+	
+	
+	Bundle ext=new Bundle();
+	ext.putInt("thisRemove", num);
+	Intent intent = new Intent();
+	intent.putExtras(ext);
+        intent.setAction("notice");
+        sendBroadcast(intent);
 	
     }
     @Override
@@ -159,7 +178,14 @@ public class NoticeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 	// TODO 自动生成的方法存根
-	//Bundle extras=intent.getExtras();
+	Bundle extras=intent.getExtras();
+	int removeid=extras.getInt("thisRemove");
+	Log.d("removeidid==",removeid+"");
+	if((removeid)>=0){
+	    MyWindowManager.removeSmallWindow(getApplicationContext(), removeid);
+	    MyWindowManager.removeBigWindow(getApplicationContext(),removeid);
+	    return;
+	}
 	Log.d("收到了","收到了");
 	Log.d("list===",sbnList+"");
 	if(sbnList!=null)

@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
     android:orientation="vertical"
     android:id="@+id/pack_layout" >
 
     <RelativeLayout
-        android:layout_width="40dp"
-        android:layout_height="40dp" >
+        android:layout_width="60dp"
+        android:layout_height="60dp" >
 
         <ImageView
             android:id="@+id/large_icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:padding="3dp"
-            android:src="@drawable/circle_cyan" />
+            android:padding="5dp"
+             />
 
         <ImageView
             android:id="@+id/small_icon"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_back" />
+             />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/number_bg"
+            android:gravity="center"
+            android:textColor="#ffff00"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

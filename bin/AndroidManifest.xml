@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.floatnotice.demo"
     android:versionCode="1"
-    android:versionName="1.0.1" >
-    
+    android:versionName="1.0.1" android:installLocation="auto">
+
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-sdk
@@ -14,9 +14,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        >
+         android:theme="@style/AppTheme">
         <activity
-            android:name="com.floatnotice.demo.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-     <service android:name="com.floatnotice.demo.service.NoticService"
-                 android:label="@string/app_name"
-                 android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+
+        <service
+            android:name=".service.NoticService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
@@ -34,5 +36,4 @@
 
     </application>
 
-    
 </manifest>

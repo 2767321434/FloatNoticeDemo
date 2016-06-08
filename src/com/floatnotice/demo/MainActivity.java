@@ -9,21 +9,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.floatnotice.demo.service.NoticService;
 
 
 public class MainActivity extends Activity {
@@ -37,12 +27,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ctx=getApplicationContext();
-        tv=(TextView) findViewById(R.id.tv1);
+        /*      tv=(TextView) findViewById(R.id.tv1);
         btn=(Button) findViewById(R.id.button1);
         Button btn2 = (Button) findViewById(R.id.button2);
-        Intent intent = new Intent(MainActivity.this, NoticService.class);  
-        startService(intent);
-        btn.setOnClickListener(new OnClickListener() {
+      Intent intent = new Intent(MainActivity.this, NoticService.class);  
+        startService(intent);*/
+       /* btn.setOnClickListener(new OnClickListener() {
    	 
    	 //启动FloatViewService  
             
@@ -50,16 +40,7 @@ public class MainActivity extends Activity {
 	    @Override
 	    public void onClick(View v) {
 		// TODO 自动生成的方法存根
-		/*if(!isServiceRunning(ctx,"com.example.floatviewdemo.service.FloatViewService"))
-		{
-		    Intent intent = new Intent(MainActivity.this, FloatViewService.class);  
-		    startService(intent); 
-		}else
-		{
-		    Intent intent = new Intent(MainActivity.this, FloatViewService.class);  
-		        //终止FloatViewService  
-		        stopService(intent);
-		}*/
+
 		NotificationManager  nm=(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		PendingIntent pendingIntent3 = PendingIntent.getActivity(getApplicationContext(), 0,  
 	                    new Intent(ctx, MainActivity.class), 0); 
@@ -74,8 +55,8 @@ public class MainActivity extends Activity {
                 .setContentIntent(pendingIntent3).setNumber(1).build();
 		// notify3.flags |= Notification.FLAG_AUTO_CANCEL; // FLAG_AUTO_CANCEL表明当通知被用户点击时，通知将被清除。  
 		nm.notify(NOTIFICATION_FLAG, notify3);
-/*	Notification nb=new Notification.Builder(getApplicationContext()).setContentTitle("my title！").setContentText("my textinfo").setSubText("my subtext").build();
-	nm.notify(NOTIFICATION_FLAG, nb);*/
+	Notification nb=new Notification.Builder(getApplicationContext()).setContentTitle("my title！").setContentText("my textinfo").setSubText("my subtext").build();
+	nm.notify(NOTIFICATION_FLAG, nb);
 	    }
 	});
         btn2.setOnClickListener(new OnClickListener() {
@@ -86,27 +67,10 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
 		    startActivity(intent);
 	    }
-	});
+	});*/
     }
     
-    /*@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		 Intent intent = new Intent(MainActivity.this, FloatViewService.class);  
-         //启动FloatViewService  
-         startService(intent);  
-		super.onStart();
-	}
-	
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		// 销毁悬浮窗
-		Intent intent = new Intent(MainActivity.this, FloatViewService.class);  
-        //终止FloatViewService  
-        stopService(intent); 
-        super.onStop();
-	}*/
+  
 	/**
 	        * 用来判断服务是否运行.
 	        * @param context
