@@ -116,6 +116,7 @@ public class NoticService extends NotificationListenerService {
 		    MyWindowManager.createSmallWindow(getApplicationContext(), i);
 		}
 	    }
+	    
 	}
     }
 }

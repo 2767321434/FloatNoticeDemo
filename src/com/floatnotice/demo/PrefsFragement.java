@@ -38,7 +38,7 @@ public class PrefsFragement extends PreferenceFragment{
 		        .setLargeIcon(bm)
 		        .setContentText("This is the notification message")
 		        .setSmallIcon(R.drawable.circle_red)
-		        .setContentIntent(pendingIntent3).setNumber(1).build();
+		        .setContentIntent(pendingIntent3).setNumber(2).build();
 			// notify3.flags |= Notification.FLAG_AUTO_CANCEL; // FLAG_AUTO_CANCEL表明当通知被用户点击时，通知将被清除。  
 			nm.notify(1, notify3);
 	/*	Notification nb=new Notification.Builder(activity).setContentTitle("my title！").setContentText("my textinfo").setSubText("my subtext").build();

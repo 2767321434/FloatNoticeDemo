@@ -8,7 +8,6 @@ import android.graphics.PixelFormat;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
@@ -17,20 +16,14 @@ import com.floatnotice.demo.service.NoticService;
 public class MyWindowManager implements ServiceListener {
 
     private static NoticService service;
-    /**
-     * 小悬浮窗View的实例
-     */
-    private static PackView smallWindow;
+
 
     /**
      * 大悬浮窗View的实例
      */
     private static UnpackView bigWindow;
 
-    /**
-     * 小悬浮窗View的参数
-     */
-    private static LayoutParams smallWindowParams;
+
 
     /**
      * 大悬浮窗View的参数
@@ -43,8 +36,9 @@ public class MyWindowManager implements ServiceListener {
     private static WindowManager mWindowManager;
 
     private static Map<Integer, StatusBarNotification> exts = new HashMap<Integer, StatusBarNotification>();
-    private static Map<Integer, View> sView = new HashMap<Integer, View>();
-    private static Map<Integer, View> lView = new HashMap<Integer, View>();
+    private static Map<Integer, PackView> sView = new HashMap<Integer, PackView>();
+    private static Map<Integer, UnpackView> lView = new HashMap<Integer, UnpackView>();
+    private static Map<Integer, LayoutParams> sLayoutList=new HashMap<Integer, LayoutParams>();
 
     /**
      * 创建一个小悬浮窗。初始位置为屏幕的右部中间位置。
@@ -56,12 +50,16 @@ public class MyWindowManager implements ServiceListener {
 	WindowManager windowManager = getWindowManager(context);
 	int screenWidth = windowManager.getDefaultDisplay().getWidth();
 	int screenHeight = windowManager.getDefaultDisplay().getHeight();
-	if (sView.get(id) == null) {
+	PackView smallWindow=sView.get(id);
+	 LayoutParams smallWindowParams=sLayoutList.get(id);
+	 Log.d("newId===",id+"");
+	 Log.d("newSmallOut",sView.get(id)+"");
+	if (smallWindow == null) {
+	    
 	    smallWindow = new PackView(context, id);
 	    smallWindow.setAlpha(0.7f);
-	    sView.put(id, smallWindow);
-	    if (smallWindowParams == null) {
-		smallWindowParams = new LayoutParams();
+	    if(smallWindowParams==null){
+	    smallWindowParams = new LayoutParams();
 		smallWindowParams.type = LayoutParams.TYPE_TOAST;
 		smallWindowParams.format = PixelFormat.RGBA_8888;
 		smallWindowParams.flags = LayoutParams.FLAG_NOT_TOUCH_MODAL
@@ -73,6 +71,8 @@ public class MyWindowManager implements ServiceListener {
 		smallWindowParams.y = screenHeight / 2;
 	    }
 	    smallWindow.setParams(smallWindowParams);
+	
+	    sView.put(id, smallWindow);
 	    windowManager.addView(smallWindow, smallWindowParams);
 	}
     }
@@ -86,9 +86,10 @@ public class MyWindowManager implements ServiceListener {
     public static void removeSmallWindow(Context context, int id) {
 
 	if (sView.get(id) != null) {
+	    sLayoutList.put(id,(LayoutParams) sView.get(id).getLayoutParams());
 	    WindowManager windowManager = getWindowManager(context);
 	    windowManager.removeView(sView.get(id));
-	    sView.put(id, null);
+	    sView.remove(id);
 	}
     }
 
@@ -102,10 +103,11 @@ public class MyWindowManager implements ServiceListener {
 	WindowManager windowManager = getWindowManager(context);
 	int screenWidth = windowManager.getDefaultDisplay().getWidth();
 	int screenHeight = windowManager.getDefaultDisplay().getHeight();
-	if (lView.get(id) == null) {
+	bigWindow=lView.get(id);
+	Log.d("bigView-out",bigWindow+"");
+		
+	if (bigWindow== null) {
 	    bigWindow = new UnpackView(context, id);
-
-	    lView.put(id, bigWindow);
 	    if (bigWindowParams == null) {
 		bigWindowParams = new LayoutParams();
 		bigWindowParams.x = screenWidth / 2 - UnpackView.viewWidth / 2;
@@ -117,8 +119,10 @@ public class MyWindowManager implements ServiceListener {
 		bigWindowParams.height = UnpackView.viewHeight;
 
 	    }
-	    windowManager.addView(bigWindow, bigWindowParams);
+	    bigWindow.setLayoutParams(bigWindowParams);
+	    lView.put(id, bigWindow);
 	}
+	windowManager.addView(bigWindow, bigWindowParams);
     }
 
     /**
@@ -132,7 +136,25 @@ public class MyWindowManager implements ServiceListener {
 	    Log.d("removeBig", lView.get(id) + "---");
 	    WindowManager windowManager = getWindowManager(context);
 	    windowManager.removeView(lView.get(id));
-	    lView.put(id, null);
+	   lView.remove(id);
+	}
+    }
+    /**
+     * 移除通知时移除全部界面
+     * @param context
+     * @param id
+     */
+    public static void removeAllView(Context context,int id)
+    {	
+	if (lView.get(id) != null){
+	    WindowManager windowManager = getWindowManager(context);
+	    windowManager.removeView(lView.get(id));
+	    lView.remove(id);
+	}
+	if (sView.get(id) != null) {
+	    WindowManager windowManager = getWindowManager(context);
+	    windowManager.removeView(sView.get(id));
+	    sView.remove(id);
 	}
     }
     /*

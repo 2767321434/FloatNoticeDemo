@@ -70,6 +70,7 @@ public class UnpackView extends LinearLayout{
 	private Context mContext;
 	private int statusBarHeight;
 	private int id;
+	
     @SuppressLint("NewApi")
     public UnpackView(final Context context,final int id) {
 	super(context);
@@ -160,6 +161,8 @@ public class UnpackView extends LinearLayout{
 		// TODO 自动生成的方法存根
 		try {
 		    pi.send();
+		MyWindowManager.removeBigWindow(context,id);
+		MyWindowManager.removeSmallWindow(context,id);
 		} catch (CanceledException e) {
 		    // TODO 自动生成的 catch 块
 		    e.printStackTrace();

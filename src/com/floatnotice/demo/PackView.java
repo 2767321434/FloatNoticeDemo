@@ -99,12 +99,12 @@ public class PackView extends LinearLayout {
 		ImageView smallImage=(ImageView) findViewById(R.id.small_icon);
 		StatusBarNotification sbn=MyWindowManager.getInfo(id);
 		Bundle ext=sbn.getNotification().extras;
-		Bitmap large_icon=ext.getParcelable(Notification.EXTRA_LARGE_ICON);
+		Bitmap large_icon=(Bitmap)ext.getParcelable(Notification.EXTRA_LARGE_ICON);
 		int number=sbn.getNotification().number;
 		TextView numberView=(TextView) findViewById(R.id.number);
 		if(number>1){
 		    numberView.setVisibility(VISIBLE);
-		    numberView.setText(number);
+		    numberView.setText(number+"");
 		}
 		
 		
