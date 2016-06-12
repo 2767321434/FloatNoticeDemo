@@ -188,7 +188,12 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
         SharedPreferences.Editor editor = mySharedPreferences.edit(); 
         editor.putStringSet("appList", list);
         editor.commit(); 
-        
+	Bundle ext=new Bundle();
+	Intent intent = new Intent();
+	ext.putInt("update_list", 2);
+	intent.putExtras(ext);
+	intent.setAction(this.getPackageName() + "._notice");
+	sendBroadcast(intent);
     }
 
    

@@ -111,6 +111,13 @@ public class NoticService extends NotificationListenerService {
 	    // TODO 自动生成的方法存根
 	    Bundle extras = intent.getExtras();
 	    int removeid = extras.getInt("thisRemove");
+	    int updateList=extras.getInt("update_list");
+	    if(updateList>0)
+	    {
+		SharedPreferences sharedPreferences= getSharedPreferences("app_list", Activity.MODE_PRIVATE); 
+		appList=sharedPreferences.getStringSet("appList", new HashSet<String>());
+		return;
+	    }
 	    Log.d("removeidid==", removeid + "");
 	    if ((removeid) >= 0) {
 		MyWindowManager.removeSmallWindow(getApplicationContext(),
