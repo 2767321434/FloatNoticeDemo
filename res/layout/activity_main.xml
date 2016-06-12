@@ -7,11 +7,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.floatnotice.demo.MainActivity" >
+    tools:context="cn.my.floatnotice.MainActivity" >
 
     <fragment
         android:id="@+id/fragment1"
-        android:name="com.floatnotice.demo.PrefsFragement"
+        android:name="cn.my.floatnotice.PrefsFragement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 	/>
