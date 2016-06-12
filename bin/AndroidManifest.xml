@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.my.floatnotice"
+    package="cn.fonely.floatnotice"
     android:versionCode="1"
     android:versionName="0.6" >
 
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="cn.fonely.floatnotice.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,8 +25,7 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.NoticService"
+        <service android:name="cn.fonely.floatnotice.service.NoticService"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
             <intent-filter>
@@ -35,7 +34,7 @@
         </service>
 
         <activity
-            android:name=".AppListActivity"
+            android:name="cn.fonely.floatnotice.AppListActivity"
             android:label="@string/title_activity_app_list" >
         </activity>
     </application>
