@@ -61,7 +61,7 @@ public class MyWindowManager implements ServiceListener {
 	 LayoutParams smallWindowParams=sLayoutList.get(id);
 	 Log.d("newId===",id+"");
 	 Log.d("newSmallOut",sView.get(id)+"");
-	if (smallWindow == null) {
+	if (smallWindow == null&lView.get(id)==null) {
 	    
 	    smallWindow = new PackView(context, id);
 	    smallWindow.setAlpha(0.7f);
