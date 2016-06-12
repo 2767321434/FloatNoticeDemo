@@ -1,11 +1,15 @@
 package com.floatnotice.demo.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -19,11 +23,15 @@ public class NoticService extends NotificationListenerService {
     private NoticeReceiver myReceiver;
     private ArrayList<StatusBarNotification> sbnList;
     private ArrayList<String> pkg_names;
+    private Set<String> appList;
 
     @Override
     public void onCreate() {
 	// TODO 自动生成的方法存根
 	super.onCreate();
+	appList=new HashSet<String>();
+	SharedPreferences sharedPreferences= getSharedPreferences("app_list", Activity.MODE_PRIVATE); 
+	appList=sharedPreferences.getStringSet("appList", new HashSet<String>());
 	pkg_names = new ArrayList<String>();
 	myReceiver = new NoticeReceiver();
 	IntentFilter intentFilter = new IntentFilter();
@@ -42,9 +50,16 @@ public class NoticService extends NotificationListenerService {
 	sbnList = new ArrayList<StatusBarNotification>();
 	for (StatusBarNotification sn : getActiveNotifications()) {
 	    Log.d("sn.isClearable()", "" + sn.isClearable());
-	    if (sn.isClearable()) {
-		sbnList.add(sn);
-	    }
+	   for(String pkg:appList)
+	   {
+	       if(sn.getPackageName().equals(pkg)){
+		   if (sn.isClearable()) {
+			
+			sbnList.add(sn);
+		    }
+	       }
+	   }
+	   
 	}
 	Bundle ext = new Bundle();
 	ext.putInt("thisRemove", -1);
