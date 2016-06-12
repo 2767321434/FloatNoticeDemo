@@ -29,6 +29,28 @@
                
         </PreferenceScreen>  
 </PreferenceCategory>  
+ <PreferenceCategory android:title="关于" > 
+      <PreferenceScreen  
+            android:key="github"
+            android:summary="本应用开源，源码请查看GitHub"  
+            android:title="查看GitHub的开源页面" > 
+            <intent  
+                android:action="android.intent.action.VIEW"  
+                android:data="https://github.com/2767321434/FloatNoticeDemo"
+                /> 
+               
+        </PreferenceScreen> 
+        <PreferenceScreen  
+            android:key="blog"
+            android:summary="访问我的博客"  
+            android:title="访问我的博客" > 
+            <intent  
+                android:action="android.intent.action.VIEW"  
+                android:data="http://blog.csdn.net/qq_32969313"
+                /> 
+               
+        </PreferenceScreen> 
+     </PreferenceCategory>
     <!-- <PreferenceCategory android:title="Launch preferences" >   
         This PreferenceScreen tag serves as a screen break (similar to page break in word processing). Like for other preference types, we assign a key here so it is able to save and restore its instance state.  
         <PreferenceScreen  
