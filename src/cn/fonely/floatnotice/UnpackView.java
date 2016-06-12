@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -98,7 +99,10 @@ public class UnpackView extends LinearLayout {
 	  Log.d("pi==",pi+""); Log.d("this_id",nid+"");
 	  Log.d("this_tag",key+""); Log.d("title",title+"");
 	  Log.d("text",text+"");
-	 
+	 //-------- 设置该view能接收的按键事件的关键，还是得看国外的网站靠谱
+	  this.requestFocus();
+	  this.setFocusableInTouchMode(true);
+	//-----------  
 	TextView title_view = (TextView) findViewById(R.id.nTitle);
 	title_view.setText(title);
 	TextView text_view = (TextView) findViewById(R.id.nText);
@@ -132,8 +136,7 @@ public class UnpackView extends LinearLayout {
 	    @Override
 	    public void onClick(View v) {
 		// 点击关闭悬浮窗的时候，移除所有悬浮窗
-		MyWindowManager.removeBigWindow(context, id);
-		MyWindowManager.removeSmallWindow(context, id);
+		removeAll();
 		NoticService ns = MyWindowManager.getNS();
 		if (android.os.Build.VERSION.SDK_INT >= 21) {
 		    ns.cancelNotification(key);
@@ -146,10 +149,7 @@ public class UnpackView extends LinearLayout {
 	    @Override
 	    public void onClick(View v) {
 		// 点击返回的时候，移除大悬浮窗，创建小悬浮窗
-		MyWindowManager.removeBigWindow(context, id);
-		Log.d("unpack_id", id + "---");
-		MyWindowManager.createSmallWindow(context, id);
-
+		 returnToSmall();
 	    }
 	});
 	text_view.setOnClickListener(new OnClickListener() {
@@ -159,8 +159,13 @@ public class UnpackView extends LinearLayout {
 		// TODO 自动生成的方法存根
 		try {
 		    pi.send();
-		    MyWindowManager.removeBigWindow(context, id);
-		    MyWindowManager.removeSmallWindow(context, id);
+		    removeAll();
+		    NoticService ns = MyWindowManager.getNS();
+				if (android.os.Build.VERSION.SDK_INT >= 21) {
+				    ns.cancelNotification(key);
+				} else {
+				    ns.cancelNotification(pkg_name, tag, nid);
+				}
 		} catch (CanceledException e) {
 		    // TODO 自动生成的 catch 块
 		    e.printStackTrace();
@@ -187,13 +192,35 @@ public class UnpackView extends LinearLayout {
 		    || yInView > viewHeight) {
 		 Log.d("unpack_id",id+"---");
 		// 点击窗口外的区域返回，移除大悬浮窗，创建小悬浮窗
-		MyWindowManager.removeBigWindow(mContext, id);
-		MyWindowManager.createSmallWindow(mContext, id);
+		 returnToSmall();
 	    }
 	    break;
 	}
 	return super.onTouchEvent(event);
 
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO 自动生成的方法存根
+	if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+	    returnToSmall();
+	    Log.d("按下返回键",""+keyCode);
+            return true;
+        }
+       
+        return super.onKeyDown(keyCode, event);
+    }
+   
+    
+    private void returnToSmall()
+    {
+	MyWindowManager.removeBigWindow(mContext, id);
+	MyWindowManager.createSmallWindow(mContext, id);
+    }
+    private void removeAll()
+    {
+	  MyWindowManager.removeBigWindow(mContext, id);
+	  MyWindowManager.removeSmallWindow(mContext, id);
+    }
 }

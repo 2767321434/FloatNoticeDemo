@@ -83,7 +83,7 @@ public class MyWindowManager implements ServiceListener {
 	    windowManager.addView(smallWindow, smallWindowParams);
 	}
     }
-
+    
     /**
      * 将小悬浮窗从屏幕上移除。
      * 
