@@ -71,12 +71,18 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
 			                	    item.setAppIcon(resolve.loadIcon(pManager));
 			                	    item.setAppName(resolve.loadLabel(pManager).toString());
 			                	    item.setPkgName(resolve.activityInfo.packageName);
+			                	    Log.d("app_pkg_name",resolve.activityInfo.packageName);
 			                	    if(appList.contains(resolve.activityInfo.packageName))
 			                	    {
+			                		 Log.d("select_app_pkg_name",resolve.activityInfo.packageName);
 			                		item.setChecked(true);
 			                	    }
 			                	    item.setId(j);
 			                	    dataList.add(item);
+			                	    if(item.isChecked())
+			                	    {
+			                		selectedList.add(item);
+			                	    }
 			                	    progressDialog.incrementProgressBy(j);  
 			                	    Log.d("name--"+j,resolve.loadLabel(pManager).toString());
 			                /*	    try {
@@ -94,7 +100,7 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
           myAdapter=new AppListAdapter(dataList, AppListActivity.this);
           appListView.setAdapter(myAdapter);
           myAdapter.setOnShowItemClickListener(AppListActivity.this);*/
-	appListView.setOnItemClickListener(new OnItemClickListener() {
+	  appListView.setOnItemClickListener(new OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view,
@@ -180,20 +186,39 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
         // TODO 自动生成的方法存根
         super.onDestroy();
         Set<String> list=new HashSet<String>();
+        Log.d("s_size==",selectedList.size()+"");
         for(int i=0;i<selectedList.size();i++)
         {
+            Log.d("s_list_"+i,selectedList.get(i).getPkgName());
             list.add(selectedList.get(i).getPkgName());
         }
         SharedPreferences mySharedPreferences= getSharedPreferences("app_list", Activity.MODE_PRIVATE); 
         SharedPreferences.Editor editor = mySharedPreferences.edit(); 
+        editor.clear();
         editor.putStringSet("appList", list);
+        editor.putInt("app_list_size", list.size());
         editor.commit(); 
-	Bundle ext=new Bundle();
+        editor.apply();
+        Bundle ext=new Bundle();
 	Intent intent = new Intent();
 	ext.putInt("update_list", 2);
 	intent.putExtras(ext);
 	intent.setAction(this.getPackageName() + "._notice");
 	sendBroadcast(intent);
+	
+	if(myAdapter!=null)
+	{
+	    myAdapter=null;
+	}
+	if(dataList!=null)
+	{
+	    dataList=null;
+	}
+	if(selectedList!=null)
+	{
+	    selectedList=null;
+	}
+	
     }
 
    

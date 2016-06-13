@@ -19,7 +19,7 @@ public class AppListAdapter extends BaseAdapter{
 
     private LayoutInflater inflater;
     private List<ItemBean> items;
-    private ItemBean item;
+    private ItemBean item=null;
     private OnShowItemClickListener onShowItemClickListener;
     
     public AppListAdapter(List<ItemBean> list,Context context)
@@ -48,7 +48,7 @@ public class AppListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 	// TODO 自动生成的方法存根
-	 ViewHolder holder;
+	 ViewHolder holder=null;
 	 if(convertView==null)
 	 {
 	     holder=new ViewHolder();
@@ -66,7 +66,6 @@ public class AppListAdapter extends BaseAdapter{
 	 item=items.get(position);
 	 holder.appIconView.setImageDrawable(item.getAppIcon());
 	 holder.appNameView.setText(item.getAppName());
-	 
 	 holder.cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 	        @Override
 	        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -87,7 +86,7 @@ public class AppListAdapter extends BaseAdapter{
 	 
     }
 
-    static class ViewHolder
+     class ViewHolder
     {
     ImageView appIconView;
     CheckBox cb;
