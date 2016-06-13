@@ -22,7 +22,6 @@
             android:summary="选择需要显示通知的应用"  
             android:title="选择通知应用" > 
             <intent  
-                android:action="android.intent.action.MAIN"  
                 android:targetPackage="cn.fonely.floatnotice"  
            		android:targetClass="cn.fonely.floatnotice.AppListActivity"
                 /> 
@@ -30,6 +29,16 @@
         </PreferenceScreen>  
 </PreferenceCategory>  
  <PreferenceCategory android:title="关于" > 
+     <PreferenceScreen  
+            android:key="app_help"
+            android:summary="显示帮助"  
+            android:title="帮助" > 
+            <intent  
+                android:targetPackage="cn.fonely.floatnotice"  
+           		android:targetClass="cn.fonely.floatnotice.HelpActivity"
+               />
+                
+      </PreferenceScreen> 
       <PreferenceScreen  
             android:key="github"
             android:summary="本应用开源，源码请查看GitHub"  
