@@ -16,7 +16,8 @@ import cn.fonely.floatnotice.service.NoticService;
 public class MyWindowManager implements ServiceListener {
 
     private static NoticService service;
-
+    
+    private static MyWindowManager instance;
 
     /**
      * 大悬浮窗View的实例
@@ -184,10 +185,16 @@ public class MyWindowManager implements ServiceListener {
      */
     private static WindowManager getWindowManager(Context context) {
 	if (mWindowManager == null) {
-	    mWindowManager = (WindowManager) context
+	    mWindowManager = (WindowManager) context.getApplicationContext()//使用应用的context，防止内存泄漏
 		    .getSystemService(Context.WINDOW_SERVICE);
 	}
 	return mWindowManager;
+    }
+    public static MyWindowManager getInstance(){
+	if(instance==null){
+	    instance=new MyWindowManager();
+	}
+	return instance;
     }
     /**
      * 注册服务，获取通知服务实例

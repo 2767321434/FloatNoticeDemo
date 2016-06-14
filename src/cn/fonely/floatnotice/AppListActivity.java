@@ -96,6 +96,7 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
 							e.printStackTrace();
 						    }*/
 			                	}
+			                	mAllApps.clear();
 			               progressDialog.dismiss();  
 			               mHandler.sendEmptyMessage(1234);
 		    }

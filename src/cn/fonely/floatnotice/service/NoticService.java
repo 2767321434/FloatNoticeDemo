@@ -34,7 +34,7 @@ public class NoticService extends NotificationListenerService {
 	IntentFilter intentFilter = new IntentFilter();
 	intentFilter.addAction(this.getPackageName() + "._notice");
 	registerReceiver(myReceiver, intentFilter);
-	MyWindowManager mWM = new MyWindowManager();
+	MyWindowManager mWM= MyWindowManager.getInstance();
 	mWM.registerService(this);
 
 	Log.d("onCreate", "服务启动");
@@ -99,7 +99,7 @@ public class NoticService extends NotificationListenerService {
 	if (myReceiver != null) {
 	    unregisterReceiver(myReceiver);
 	}
-	MyWindowManager mWM = new MyWindowManager();
+	MyWindowManager mWM= MyWindowManager.getInstance();
 	mWM.unregisterService();
 	mWM = null;
     }
