@@ -20,6 +20,7 @@ public class AppListAdapter extends BaseAdapter{
     private LayoutInflater inflater;
     private List<ItemBean> items;
     private ItemBean item=null;
+    private ViewHolder holder=null;
     private OnShowItemClickListener onShowItemClickListener;
     
     public AppListAdapter(List<ItemBean> list,Context context)
@@ -44,11 +45,10 @@ public class AppListAdapter extends BaseAdapter{
 	// TODO 自动生成的方法存根
 	return items.get(position).getId();
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 	// TODO 自动生成的方法存根
-	 ViewHolder holder=null;
+	
 	 if(convertView==null)
 	 {
 	     holder=new ViewHolder();
@@ -84,6 +84,22 @@ public class AppListAdapter extends BaseAdapter{
 	 	holder.cb.setChecked(item.isChecked());
 		return convertView;
 	 
+    }
+    
+    public void clearObjects()
+    {
+	if(this.holder!=null)
+	{
+	    this.holder=null;
+	}
+	if(this.items!=null)
+	{
+	    this.items.clear();
+	}
+	if(this.item!=null)
+	{
+	    item=null;
+	}
     }
 
      class ViewHolder

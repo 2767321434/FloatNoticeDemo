@@ -38,13 +38,9 @@ public class MyWindowManager implements ServiceListener {
      * 用于存放获得的StatusBarNotification对象
      */
    private static SparseArray<StatusBarNotification> sbns=new SparseArray<StatusBarNotification>();
-    
-   // private static Map<Integer, StatusBarNotification> sbns = new HashMap<Integer, StatusBarNotification>();
+   
    private static SparseArray<PackView> sView=new SparseArray<PackView>();
-    //private static Map<Integer, PackView> sView = new HashMap<Integer, PackView>();
-   // private static Map<Integer, UnpackView> lView = new HashMap<Integer, UnpackView>();
    private static SparseArray<UnpackView> lView =new SparseArray<UnpackView>();
-  //  private static Map<Integer, LayoutParams> sLayoutList=new HashMap<Integer, LayoutParams>();
    private static SparseArray<LayoutParams> sLayoutList=new SparseArray<WindowManager.LayoutParams>();
     /**
      * 创建一个小悬浮窗。初始位置为屏幕的右部中间位置。
@@ -198,7 +194,7 @@ public class MyWindowManager implements ServiceListener {
      */
     public void registerService(NoticService service) {
 	// TODO 自动生成的方法存根
-	this.service = service;
+	MyWindowManager.service = service;
     }
 
     /**
@@ -207,6 +203,10 @@ public class MyWindowManager implements ServiceListener {
     public void unregisterService() {
 	// TODO 自动生成的方法存根
 	service = null;
+	sbns.clear();
+	sLayoutList.clear();
+	sView.clear();
+	lView.clear();
     }
     
     /**

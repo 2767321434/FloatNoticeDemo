@@ -18,6 +18,12 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        // TODO 自动生成的方法存根
+        super.onDestroy();
+        finish();
+    }
    /* *//**
      * 用来判断服务是否运行.
      * 

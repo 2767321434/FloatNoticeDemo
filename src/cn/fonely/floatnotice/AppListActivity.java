@@ -1,5 +1,6 @@
 package cn.fonely.floatnotice;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,15 +26,18 @@ import cn.fonely.floatnotice.AppListAdapter.OnShowItemClickListener;
 public class AppListActivity extends Activity implements OnShowItemClickListener {
 
     private Button sAllBtn,cAllBtn;
-    private ListView appListView;
-    private List<ItemBean> dataList,selectedList;
-    private AppListAdapter myAdapter;
+    private  ListView appListView;
+    private  List<ItemBean> dataList;
+    private List<ItemBean> selectedList;
+    private  AppListAdapter myAdapter;
     private ProgressDialog progressDialog = null;
     private Set<String> appList;
+    private final Handler mHandler = new MyHandler(this);  
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
+	
 	appList=new HashSet<String>();
 	SharedPreferences sharedPreferences= getSharedPreferences("app_list", Activity.MODE_PRIVATE); 
 	appList=sharedPreferences.getStringSet("appList", new HashSet<String>());
@@ -93,7 +97,7 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
 						    }*/
 			                	}
 			               progressDialog.dismiss();  
-			               handler.sendEmptyMessage(1234);
+			               mHandler.sendEmptyMessage(1234);
 		    }
 		}).start();
 	/*  Log.d("dataList.size",""+dataList.size());
@@ -154,21 +158,36 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
 	            myAdapter.notifyDataSetChanged();
 	        }
 	    });
-	   
+	    
 	  
     }
     
-    private Handler handler=new Handler(){
+    private void updataList()
+    {
+	 Log.d("dataList.size",""+dataList.size());
+         myAdapter=new AppListAdapter(dataList, AppListActivity.this);
+         appListView.setAdapter(myAdapter);
+         myAdapter.setOnShowItemClickListener(AppListActivity.this);
+    }
+    
+    private  static class MyHandler extends Handler{
+
+	private final WeakReference<AppListActivity> mActivity;  
+	  
+        public MyHandler(AppListActivity activity) {  
+            mActivity = new WeakReference<AppListActivity>(activity);  
+        }  
+  
 	public void handleMessage(android.os.Message msg) {
 	    if(msg.what==1234)
 	    {
-		 Log.d("dataList.size",""+dataList.size());
-	                myAdapter=new AppListAdapter(dataList, AppListActivity.this);
-	                appListView.setAdapter(myAdapter);
-	                myAdapter.setOnShowItemClickListener(AppListActivity.this);
+		if (mActivity.get() == null) {  
+	                return;  
+	            }  
+	            mActivity.get().updataList();
 	    }
-	};
-    };
+	}
+    }
     
 
     @Override
@@ -208,7 +227,7 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
 	
 	if(myAdapter!=null)
 	{
-	    myAdapter=null;
+	    myAdapter.clearObjects();
 	}
 	if(dataList!=null)
 	{
@@ -218,6 +237,15 @@ public class AppListActivity extends Activity implements OnShowItemClickListener
 	{
 	    selectedList=null;
 	}
+	if(progressDialog!=null)
+	{
+	    progressDialog=null;
+	}
+	if(appListView!=null)
+	{
+	    appListView=null;
+	}
+	mHandler.removeCallbacksAndMessages(null);
 	
     }
 

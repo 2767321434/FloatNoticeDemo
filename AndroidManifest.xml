@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.fonely.floatnotice"
     android:versionCode="1"
-    android:versionName="0.6" >
+    android:versionName="0.65" >
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
