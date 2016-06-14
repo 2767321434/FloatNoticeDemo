@@ -136,13 +136,14 @@ public class UnpackView extends LinearLayout {
 	    @Override
 	    public void onClick(View v) {
 		// 点击关闭悬浮窗的时候，移除所有悬浮窗
-		removeAll();
+		
 		NoticService ns = MyWindowManager.getNS();
 		if (android.os.Build.VERSION.SDK_INT >= 21) {
 		    ns.cancelNotification(key);
 		} else {
 		    ns.cancelNotification(pkg_name, tag, nid);
 		}
+		removeAll();
 	    }
 	});
 	back.setOnClickListener(new OnClickListener() {
