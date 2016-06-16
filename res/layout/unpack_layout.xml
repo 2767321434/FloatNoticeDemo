@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/unpack_layout"
     android:layout_width="300dp"
-    android:layout_height="120dp"
+    android:layout_height="160dp"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -27,15 +27,30 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/nText"
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:alpha="0.8"
-        android:background="#aaaaaa"
-        android:padding="5dp"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+              <TextView
+                  android:id="@+id/nText"
+                  android:layout_width="match_parent"
+                  android:layout_height="80dp"
+                  android:alpha="0.8"
+                  android:background="#aaaaaa"
+                  android:padding="7dp"
+                  android:textColor="#000000"
+                  android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+  
 
     <LinearLayout
         android:layout_width="match_parent"

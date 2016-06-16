@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">FloatNotice</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_app_list">AppListActivity</string>
-    <string name="title_activity_help">HelpActivity</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_app_list">选择通知应用</string>
+    <string name="title_activity_help">帮助</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>
